@@ -1,9 +1,14 @@
+package com.bjava;
+
+import com.bjava.model.Resume;
+import com.bjava.storage.ArrayStorage;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Interactive test for ArrayStorage implementation
+ * Interactive test for com.bjava.storage.ArrayStorage implementation
  * (just run, no need to understand)
  */
 public class MainArray {
@@ -13,7 +18,7 @@ public class MainArray {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         Resume r;
         while (true) {
-            System.out.print("Введите одну из команд - (list | size | save uuid | delete uuid | get uuid | clear | exit): ");
+            System.out.print("Введите одну из команд - (list | size | save uuid | delete uuid | update uuid | get uuid | clear | exit): ");
             String[] params = reader.readLine().trim().toLowerCase().split(" ");
             if (params.length < 1 || params.length > 2) {
                 System.out.println("Неверная команда.");
@@ -38,6 +43,12 @@ public class MainArray {
                     break;
                 case "delete":
                     ARRAY_STORAGE.delete(uuid);
+                    printAll();
+                    break;
+                case "update":
+                    r = new Resume();
+                    r.uuid = uuid;
+                    ARRAY_STORAGE.update(r);
                     printAll();
                     break;
                 case "get":

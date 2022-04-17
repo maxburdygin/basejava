@@ -1,5 +1,10 @@
+package com.bjava;
+
+import com.bjava.model.Resume;
+import com.bjava.storage.ArrayStorage;
+
 /**
- * Test for your ArrayStorage implementation
+ * Test for your com.bjava.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
     static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
