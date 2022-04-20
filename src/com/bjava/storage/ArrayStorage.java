@@ -4,6 +4,7 @@ import com.bjava.model.Resume;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * Array based storage for Resumes
@@ -13,7 +14,7 @@ public class ArrayStorage {
     private int size = 0;
 
     public void clear() {
-        Arrays.fill(storage, null);
+        Arrays.fill(storage, 0, size - 1, null);
         size = 0;
     }
 
@@ -28,7 +29,9 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (r != null && get(r.getUuid()) == null) {
+        Objects.requireNonNull(r);
+        int index = getIndex(r.getUuid());
+        if (index == -1) {
             if (size >= 10000) {
                 System.out.println("Error - there is no space in storage to save resume with id " + r.getUuid());
             } else {
@@ -36,16 +39,20 @@ public class ArrayStorage {
                 storage[size()] = r;
                 ++size;
             }
+        } else {
+            System.out.println("The resume with id " + r.getUuid() + " is already present in storage");
         }
     }
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (index > -1) {
+        if (index == -1) {
+            System.out.println("Resume with id " + uuid + " wasn't found");
+            return null;
+        } else {
             System.out.println("Get resume with id " + uuid);
             return storage[index];
         }
-        return null;
     }
 
     public void delete(String uuid) {
@@ -55,6 +62,8 @@ public class ArrayStorage {
             storage[index] = storage[size - 1];
             storage[size - 1] = null;
             --size;
+        } else {
+            System.out.println("There is no resume found with id " + uuid);
         }
     }
 
