@@ -13,34 +13,47 @@ public class ArrayStorage {
     private int size = 0;
 
     public void clear() {
-        Arrays.fill(getAll(), null);
+        Arrays.fill(storage, null);
         size = 0;
     }
 
     public void update(Resume r) {
-        if (indexOfMatchUuid(r.uuid) > -1)
-            storage[indexOfMatchUuid(r.uuid)] = r;
-        System.out.println("ERROR - no Resume has been found for updating");
+        int index = getIndex(r.getUuid());
+        if (index > -1) {
+            System.out.println("Update resume with id " + r.getUuid());
+            storage[index] = r;
+        } else {
+            System.out.println("ERROR - no Resume has been found for updating with id " + r.getUuid());
+        }
     }
 
     public void save(Resume r) {
-        if (r != null && get(r.uuid) == null) {
-            storage[size()] = r;
-            ++size;
+        if (r != null && get(r.getUuid()) == null) {
+            if (size >= 10000) {
+                System.out.println("Error - there is no space in storage to save resume with id " + r.getUuid());
+            } else {
+                System.out.println("Save resume with id " + r.getUuid());
+                storage[size()] = r;
+                ++size;
+            }
         }
     }
 
     public Resume get(String uuid) {
-        if (indexOfMatchUuid(uuid) > -1) {
-            return storage[indexOfMatchUuid(uuid)];
+        int index = getIndex(uuid);
+        if (index > -1) {
+            System.out.println("Get resume with id " + uuid);
+            return storage[index];
         }
         return null;
     }
 
     public void delete(String uuid) {
-        if (indexOfMatchUuid(uuid) > -1) {
-            storage[indexOfMatchUuid(uuid)] = storage[size() - 1];
-            storage[size() - 1] = null;
+        int index = getIndex(uuid);
+        if (index > -1) {
+            System.out.println("Delete resume with id " + uuid);
+            storage[index] = storage[size - 1];
+            storage[size - 1] = null;
             --size;
         }
     }
@@ -56,9 +69,9 @@ public class ArrayStorage {
         return size;
     }
 
-    private int indexOfMatchUuid(String uuid) {
+    private int getIndex(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].uuid)) {
+            if (uuid.equals(storage[i].getUuid())) {
                 return i;
             }
         }
