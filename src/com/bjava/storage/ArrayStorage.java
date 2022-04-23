@@ -31,16 +31,14 @@ public class ArrayStorage {
     public void save(Resume r) {
         Objects.requireNonNull(r);
         int index = getIndex(r.getUuid());
-        if (index == -1) {
-            if (size >= 10000) {
-                System.out.println("Error - there is no space in storage to save resume with id " + r.getUuid());
-            } else {
-                System.out.println("Save resume with id " + r.getUuid());
-                storage[size()] = r;
-                ++size;
-            }
-        } else {
+        if (index != -1) {
             System.out.println("The resume with id " + r.getUuid() + " is already present in storage");
+        } else if (size == storage.length){
+            System.out.println("Error - there is no space in storage to save resume with id " + r.getUuid());
+        } else {
+            System.out.println("Save resume with id " + r.getUuid());
+            storage[size()] = r;
+            ++size;
         }
     }
 
@@ -57,13 +55,13 @@ public class ArrayStorage {
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (index > -1) {
+        if (index <= -1) {
+            System.out.println("There is no resume found with id " + uuid);
+        } else {
             System.out.println("Delete resume with id " + uuid);
             storage[index] = storage[size - 1];
             storage[size - 1] = null;
             --size;
-        } else {
-            System.out.println("There is no resume found with id " + uuid);
         }
     }
 
