@@ -2,12 +2,14 @@ package com.bjava;
 
 import com.bjava.model.Resume;
 import com.bjava.storage.ArrayStorage;
+import com.bjava.storage.SortedArrayStorage;
+import com.bjava.storage.Storage;
 
 /**
  * Test for your com.bjava.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
+    static final Storage ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume();
@@ -25,12 +27,6 @@ public class MainTestArrayStorage {
         System.out.println("Size: " + ARRAY_STORAGE.size());
 
         System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
-
-        Resume r4 = new Resume();
-        r4.setUuid("uuid2");
-
-        System.out.println("Update r2:");
-        ARRAY_STORAGE.update(r4);
 
         printAll();
         ARRAY_STORAGE.delete(r1.getUuid());
