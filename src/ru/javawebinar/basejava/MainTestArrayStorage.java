@@ -1,9 +1,8 @@
-package com.bjava;
+package ru.javawebinar.basejava;
 
-import com.bjava.model.Resume;
-import com.bjava.storage.ArrayStorage;
-import com.bjava.storage.SortedArrayStorage;
-import com.bjava.storage.Storage;
+import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.SortedArrayStorage;
+import ru.javawebinar.basejava.storage.Storage;
 
 /**
  * Test for your com.bjava.storage.ArrayStorage implementation

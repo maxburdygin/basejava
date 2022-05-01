@@ -1,15 +1,12 @@
-package com.bjava;
+package ru.javawebinar.basejava;
 
-import com.bjava.model.Resume;
-import com.bjava.storage.ArrayStorage;
-import com.bjava.storage.SortedArrayStorage;
-import com.bjava.storage.Storage;
+import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.storage.SortedArrayStorage;
+import ru.javawebinar.basejava.storage.Storage;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 /**
  * Interactive test for com.bjava.storage.ArrayStorage implementation

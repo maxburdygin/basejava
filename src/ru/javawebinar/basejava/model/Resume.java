@@ -1,4 +1,4 @@
-package com.bjava.model;
+package ru.javawebinar.basejava.model;
 
 /**
  * Initial resume class
@@ -7,6 +7,13 @@ public class Resume implements Comparable<Resume>{
 
     // Unique identifier
     private String uuid;
+
+    public Resume(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public Resume() {
+    }
 
     public String getUuid() {
         return uuid;
