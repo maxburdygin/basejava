@@ -13,8 +13,8 @@ import java.awt.image.VolatileImage;
 import static org.junit.Assert.*;
 
 public abstract class AbstractArrayStorageTest {
-    private Storage storage;
-    private static final int STORAGE_LIMIT = 10000;
+    private final Storage storage;
+    private static final int STORAGE_LIMIT = 100000;
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
@@ -66,18 +66,19 @@ public abstract class AbstractArrayStorageTest {
     public void save() {
         storage.save(RESUME_NEW);
         assertGet(RESUME_NEW);
+        assertSize(4);
     }
 
     @Test(expected = NotExistStorageException.class)
     public void delete() {
         storage.delete(UUID_1);
-        assertEquals(2, storage.size());
+        assertSize(2);
         assertGet(RESUME_1);
     }
 
     @Test
     public void get() {
-        assertGet(new Resume("uuid1"));
+        assertGet(RESUME_1);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -86,13 +87,13 @@ public abstract class AbstractArrayStorageTest {
     }
 
     @Test(expected = ExistStorageException.class)
-    public void saveAlreadyExist() {
+    public void saveExist() {
         storage.save(RESUME_1);
     }
 
     @Test(expected = StorageException.class)
     public void saveStorageOverflow() {
-        fillInTheArray();
+        fillStorage();
         storage.save(RESUME_NEW);
     }
 
@@ -114,10 +115,14 @@ public abstract class AbstractArrayStorageTest {
         assertEquals(r, storage.get(r.getUuid()));
     }
 
-    private void fillInTheArray() {
+    private void fillStorage() {
         storage.clear();
-        for (int i = 0; i < STORAGE_LIMIT ; i++) {
-            storage.save(new Resume(String.valueOf(i)));
+        try {
+            for (int i = 0; i < STORAGE_LIMIT; i++) {
+                storage.save(new Resume(String.valueOf(i)));
+            }
+        } catch (StorageException e) {
+            Assert.fail();
         }
     }
 }
