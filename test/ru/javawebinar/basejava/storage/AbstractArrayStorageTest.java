@@ -18,12 +18,19 @@ public abstract class AbstractArrayStorageTest {
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
+    private static final String UUID_4 = "uuid4";
     private static final String UUID_NOT_EXIST = "dummy";
-    private static final String UUID_NEW = "uuid_new";
-    private static final Resume RESUME_1 = new Resume(UUID_1);
-    private static final Resume RESUME_2 = new Resume(UUID_2);
-    private static final Resume RESUME_3 = new Resume(UUID_3);
-    private static final Resume RESUME_NEW = new Resume(UUID_NEW);
+    private static final Resume RESUME_1;
+    private static final Resume RESUME_2;
+    private static final Resume RESUME_3;
+    private static final Resume RESUME_4;
+
+    static {
+        RESUME_1 = new Resume(UUID_1);
+        RESUME_2 = new Resume(UUID_2);
+        RESUME_3 = new Resume(UUID_3);
+        RESUME_4 = new Resume(UUID_4);
+    }
 
     public AbstractArrayStorageTest(Storage storage) {
         this.storage = storage;
@@ -64,8 +71,8 @@ public abstract class AbstractArrayStorageTest {
 
     @Test
     public void save() {
-        storage.save(RESUME_NEW);
-        assertGet(RESUME_NEW);
+        storage.save(RESUME_4);
+        assertGet(RESUME_4);
         assertSize(4);
     }
 
@@ -94,7 +101,7 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = StorageException.class)
     public void saveStorageOverflow() {
         fillStorage();
-        storage.save(RESUME_NEW);
+        storage.save(RESUME_4);
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -104,7 +111,7 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() {
-        storage.update(RESUME_NEW);
+        storage.update(RESUME_4);
     }
 
     private void assertSize(int size) {
